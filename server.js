@@ -20,18 +20,51 @@ const db = mysql.createConnection(
     console.log(`Connected to the courses_db database.`)
 );
 
-// view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
-inquirer.prompt([
-    {
-        type: 'list',
-        name: "QUSTIONS",
-        choices: ['alligator', 'crocodile'],
-    },
-])
+prompt();
 
-db.query('SELECT * FROM role', function (err, results) {
-    console.log(results);
-});
+function prompt(){
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'answers',
+            message: "What would you like to do:",
+            choices: ['View all department',
+                    'View all roles',
+                    'View all employess',
+                    'Add department',
+                    'Add a department',
+                    'Update an employee role',
+                    'Exit'],
+    
+        },
+    ]).then(({answers}) =>{
+        console.log(answers);
+        if(answers === 'View all department'){
+            console.log('this works');
+            prompt()
+        }else if(answers === 'View all roles'){
+            SQLroles();
+        }else if(answers === 'View all employess'){
+
+        }else if(answers === 'Add department'){
+
+        }else if(answers === 'Add a department'){
+
+        }else if(answers === 'Update an employee role'){
+
+        }
+        else{
+            console.log("Bye");
+        }
+    });
+}
+
+function SQLroles(){
+    db.query('SELECT * FROM role', function (err, results) {
+        console.table(results);
+    });
+}
+
 
 app.use((req, res) => {
     res.status(404).end();
