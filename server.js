@@ -20,10 +20,16 @@ const db = mysql.createConnection(
     console.log(`Connected to the courses_db database.`)
 );
 
+const titleScreen = console.log("\x1b[32m",`.___________________________________.
+ |        <- Employee Tacker ->      |
+ |        <- Made By Aditya  ->      |
+ '-----------------------------------'`);
+
 prompt();
 
 //view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
 function prompt(){
+    titleScreen;
     inquirer.prompt([
         {
             type: 'list',
