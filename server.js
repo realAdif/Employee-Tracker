@@ -86,7 +86,6 @@ function sqlEmployee(){
     });
 }
 
-
 function sqlAddDepartment(){
     let AddDepartment;
     inquirer.prompt({
@@ -125,10 +124,8 @@ function sqlAddRole () {
         name: 'department',
         message: 'What is the department id for the role?',
     }])
-    .then(({title,salary,department})=>{
-        console.log(`title ${title}`);
-        console.log(`salary ${salary}`);
-        console.log(`department ${department}`);
+    .then(({title,salary,department})=>{ 
+        
         roleTitle = title;
         roleSalary = salary;
         roleDepartment_id = department;
@@ -136,6 +133,7 @@ function sqlAddRole () {
             if(err) console.log(err);
 
             console.log(results);
+            prompt();
         })
     })
 
@@ -143,7 +141,48 @@ function sqlAddRole () {
 }
 
 function sqlAddEmployee(){
+    let firstName;
+    let lastName;
+    let roleId;
+    let managerId;
+    inquirer.prompt([
+    {
+        type:'input',
+        name: 'employeeFirstName',
+        message: 'What is the employee first name?',
+    },{
+        type:'input',
+        name: 'employeeLastName',
+        message: 'What is the employee last name?',
+    },{
+        type:'input',
+        name: 'employeeRoleId',
+        message: 'What is the employee id?',
+    },{
+        type:'input',
+        name: 'employeeManagerId',
+        message: 'What is the employee manager id?',
+    }
+]).then(({employeeFirstName,employeeLastName,employeeRoleId,employeeManagerId})=>{
+    firstName = employeeFirstName;
+    lastName = employeeLastName;
+    roleId = employeeRoleId;
+    managerId = employeeManagerId;
+    if(managerId == '') managerId ='NULL';
+    
+    console.log(`first name ${firstName}`);
+    console.log(`last name ${lastName}`);
+    console.log(`role id ${roleId}`);
+    console.log(`manager id ${managerId}`);
+    db.query('INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)',[firstName,lastName,roleId,managerId],(err,results)=>{
+        if(err) console.log(err);
 
+        console.log(results);
+       
+    })
+    
+
+})
 }
 
 app.use((req, res) => {
