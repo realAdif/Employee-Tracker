@@ -46,19 +46,18 @@ function prompt(){
     
         },
     ]).then(({answers}) =>{
-        // console.log(answers);
         if(answers === 'View all department'){
-            SQLdepartment();      
+            sqlDepartment();      
         }else if(answers === 'View all roles'){
-            SQLroles();       
+            sqlRoles();       
         }else if(answers === 'View all employess'){
-            SQLemployee();
+            sqlEmployee();
         }else if(answers === 'Add department'){
-            SQLadddepartment()
+            sqlAddDepartment()
         }else if(answers === 'Add a role'){
-
+            sqlAddRole();
         }else if(answers === 'Add a employee'){
-
+            sqlAddEmployee();
         }else if(answers === 'Update an employee role'){
 
         }
@@ -68,19 +67,19 @@ function prompt(){
     });
 }
 
-function SQLroles(){
+function sqlRoles(){
     db.query('SELECT * FROM role',(err, results) =>{
         console.table(results);
         prompt();   
     });
 }
-function SQLdepartment(){
+function sqlDepartment(){
     db.query('SELECT * FROM department',(err, results) =>{
         console.table(results);  
         prompt();  
     });
 }
-function SQLemployee(){
+function sqlEmployee(){
     db.query('SELECT * FROM employee',(err, results) =>{
         console.table(results);  
         prompt();  
@@ -88,7 +87,7 @@ function SQLemployee(){
 }
 
 
-function SQLadddepartment(){
+function sqlAddDepartment(){
     let AddDepartment;
     inquirer.prompt({
         type: 'input',
@@ -105,6 +104,14 @@ function SQLadddepartment(){
         });
     })
     
+}
+
+function sqlAddRole () {
+    
+}
+
+function sqlAddEmployee(){
+
 }
 
 app.use((req, res) => {
