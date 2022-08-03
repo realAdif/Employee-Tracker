@@ -8,26 +8,18 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-const db = mysql.createConnection(
-    {
-        host: 'localhost',
-        // MySQL username,
-        user: 'root',
-        // MySQL password
-        password: 'aditya',
-        database: 'employees_db'
-    },
-    console.log(`Connected to the courses_db database.`)
-);
 
+
+// this is my first time doing this :)
 const titleScreen = console.log("\x1b[32m",`.___________________________________.
  |        <- Employee Tacker ->      |
  |        <- Made By Aditya  ->      |
  '-----------------------------------'`);
 
+init();
 prompt();
 
-//view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
+// all my functions
 function prompt(){
     titleScreen;
     inquirer.prompt([
@@ -73,12 +65,14 @@ function sqlRoles(){
         prompt();   
     });
 }
+
 function sqlDepartment(){
     db.query('SELECT * FROM department',(err, results) =>{
         console.table(results);  
         prompt();  
     });
 }
+
 function sqlEmployee(){
     db.query('SELECT * FROM employee',(err, results) =>{
         console.table(results);  
@@ -178,19 +172,29 @@ function sqlAddEmployee(){
         if(err) console.log(err);
 
         console.log(results);
-       
+        prompt();      
     })
-    
-
 })
 }
+// this function connection to the sql
+function init(){
+    const db = mysql.createConnection(
+        {
+            host: 'localhost',
+            // MySQL username,
+            user: 'root',
+            // MySQL password
+            password: 'aditya',
+            database: 'employees_db'
+        },
+        console.log(`Connected to the courses_db database.`)
+    );
 
-app.use((req, res) => {
-    res.status(404).end();
-});
-  
-app.listen(PORT, () => {
-   
-});
-  
-  
+    app.use((req, res) => {
+        res.status(404).end();
+    });
+      
+    app.listen(PORT, () => {
+       
+    });
+}
