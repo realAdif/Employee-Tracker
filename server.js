@@ -126,15 +126,15 @@ function sqlAddRole () {
         message: 'What is the department id for the role?',
     }])
     .then(({title,salary,department})=>{
-        console.log(`id ${title}`);
+        console.log(`title ${title}`);
         console.log(`salary ${salary}`);
         console.log(`department ${department}`);
         roleTitle = title;
         roleSalary = salary;
         roleDepartment_id = department;
-        db.query('INSERT INTO role(title, salary, department_id) VALUES(?,?,?)',roleTitle,roleSalary,roleDepartment_id,(err,results)=>{
+        db.query('INSERT INTO role(title, salary, department_id) VALUES(?,?,?)',[roleTitle,roleSalary,roleDepartment_id],(err,results)=>{
             if(err) console.log(err);
-            
+
             console.log(results);
         })
     })
