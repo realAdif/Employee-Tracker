@@ -107,7 +107,39 @@ function sqlAddDepartment(){
 }
 
 function sqlAddRole () {
-    
+    let roleTitle;
+    let roleSalary;
+    let roleDepartment_id;
+
+    inquirer.prompt([
+    {
+        type:'input',
+        name: 'title',
+        message: 'What is the title for the role?',
+    }, {
+        type:'input',
+        name: 'salary',
+        message: 'What is the salary for the role?',
+    }, {
+        type:'input',
+        name: 'department',
+        message: 'What is the department id for the role?',
+    }])
+    .then(({title,salary,department})=>{
+        console.log(`id ${title}`);
+        console.log(`salary ${salary}`);
+        console.log(`department ${department}`);
+        roleTitle = title;
+        roleSalary = salary;
+        roleDepartment_id = department;
+        db.query('INSERT INTO role(title, salary, department_id) VALUES(?,?,?)',roleTitle,roleSalary,roleDepartment_id,(err,results)=>{
+            if(err) console.log(err);
+            
+            console.log(results);
+        })
+    })
+
+
 }
 
 function sqlAddEmployee(){
