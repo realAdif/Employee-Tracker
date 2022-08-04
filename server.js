@@ -10,11 +10,22 @@ app.use(express.json());
 
 
 
-// this is my first time doing this :)
+// this is my first time doing ascii art :)
 const titleScreen = console.log("\x1b[32m",`.___________________________________.
  |        <- Employee Tacker ->      |
  |        <- Made By Aditya  ->      |
  '-----------------------------------'`);
+const db = mysql.createConnection(
+    {
+        host: 'localhost',
+        // MySQL username,
+        user: 'root',
+        // MySQL password
+        password: 'aditya',
+        database: 'employees_db'
+    },
+    console.log(`Connected to the courses_db database.`)
+);
 
 init();
 prompt();
@@ -51,10 +62,10 @@ function prompt(){
         }else if(answers === 'Add a employee'){
             sqlAddEmployee();
         }else if(answers === 'Update an employee role'){
-
+            sqlUpdateEmployee();
         }
         else{
-            console.log("Bye");   
+            console.log("Bye :0");   
         }
     });
 }
@@ -74,6 +85,7 @@ function sqlDepartment(){
 }
 
 function sqlEmployee(){
+    
     db.query('SELECT * FROM employee',(err, results) =>{
         console.table(results);  
         prompt();  
@@ -176,19 +188,63 @@ function sqlAddEmployee(){
     })
 })
 }
+
+function sqlUpdateEmployee(){
+    db.query('SELECT * FROM employee',(err, results) =>{
+        if(err) console.log(err);
+        
+        console.table(results); 
+        inquirer.prompt([
+            {
+                type: 'input',
+                name: 'coustomerId',
+                message: 'Select the ID you want to update:'
+            }
+        ]).then(({coustomerId})=>{
+            console.log(coustomerId);
+            db.query('SELECT * FROM employee WHERE id=?',coustomerId,(err,results)=>{
+                if(err) console.log(err);
+                console.table(results);
+
+                inquirer.prompt([
+                    {
+                        type:'input',
+                        name: 'employeeFirstName',
+                        message: 'What is the employee first name?',
+                    },{
+                        type:'input',
+                        name: 'employeeLastName',
+                        message: 'What is the employee last name?',
+                    },{
+                        type:'input',
+                        name: 'employeeRoleId',
+                        message: 'What is the employee id?',
+                    },{
+                        type:'input',
+                        name: 'employeeManagerId',
+                        message: 'What is the employee manager id?',
+                    }
+                ]).then(({employeeFirstName,employeeLastName,employeeRoleId,employeeManagerId})=>{
+                    
+                    if(employeeManagerId == '') employeeManagerId ='NULL';
+
+                    db.query('UPDATE employee SET first_name =?,last_name=?,role_id=?,manager_id=? WHERE id=?',
+                    [employeeFirstName,employeeLastName,employeeRoleId,employeeManagerId,coustomerId],(err,results)=>
+                    {
+                        if(err) console.log(err);
+                        console.table(results);
+                    });
+                })
+                
+                
+            })
+        })
+        
+    });
+}
 // this function connection to the sql
 function init(){
-    const db = mysql.createConnection(
-        {
-            host: 'localhost',
-            // MySQL username,
-            user: 'root',
-            // MySQL password
-            password: 'aditya',
-            database: 'employees_db'
-        },
-        console.log(`Connected to the courses_db database.`)
-    );
+    
 
     app.use((req, res) => {
         res.status(404).end();
