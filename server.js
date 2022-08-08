@@ -29,7 +29,6 @@ const db = mysql.createConnection(
 
 init();
 prompt();
-
 // all my functions
 function prompt(){
     titleScreen;
@@ -45,9 +44,6 @@ function prompt(){
                     'Add a role',
                     'Add a employee',
                     'Update an employee role',
-                    'Delete departments',
-                    'Delete role',
-                    'Delete employee',
                     'Exit'],
     
         },
@@ -236,6 +232,7 @@ function sqlUpdateEmployee(){
                     {
                         if(err) console.log(err);
                         console.table(results);
+                        prompt();
                     });
                 })
                 
