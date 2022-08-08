@@ -45,6 +45,9 @@ function prompt(){
                     'Add a role',
                     'Add a employee',
                     'Update an employee role',
+                    'Delete departments',
+                    'Delete role',
+                    'Delete employee',
                     'Exit'],
     
         },
@@ -63,6 +66,12 @@ function prompt(){
             sqlAddEmployee();
         }else if(answers === 'Update an employee role'){
             sqlUpdateEmployee();
+        }else if(answers === 'Delete departments'){
+            
+        }else if(answers === 'Delete role'){
+            
+        }else if(answers === 'Delete employee'){
+            
         }
         else{
             console.log("Bye :0");   
