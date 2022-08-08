@@ -66,12 +66,6 @@ function prompt(){
             sqlAddEmployee();
         }else if(answers === 'Update an employee role'){
             sqlUpdateEmployee();
-        }else if(answers === 'Delete departments'){
-            
-        }else if(answers === 'Delete role'){
-            
-        }else if(answers === 'Delete employee'){
-            
         }
         else{
             console.log("Bye :0");   
